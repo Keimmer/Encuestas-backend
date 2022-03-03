@@ -35,6 +35,22 @@ class ProfesoresMaterias extends Migration
                 'profesor_id' => 2,
                 'materia_id' => 2
             ],
+            [
+                'profesor_id' => 3,
+                'materia_id' => 3
+            ],
+            [
+                'profesor_id' => 4,
+                'materia_id' => 10
+            ],
+            [
+                'profesor_id' => 5,
+                'materia_id' => 9
+            ],
+            [
+                'profesor_id' => 6,
+                'materia_id' => 8
+            ],
             
             ]
         );

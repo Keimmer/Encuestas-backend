@@ -16,7 +16,6 @@ class EncuestaProfesorMateria extends Migration
         //
         Schema::create('encuesta_profesor_materias', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
             $table->unsignedBigInteger('profesor_materia_id');
             $table->foreign('profesor_materia_id')
                   ->references('id')
@@ -25,11 +24,9 @@ class EncuestaProfesorMateria extends Migration
 
         DB::table('encuesta_profesor_materias')->insert([
             [
-                'titulo' => 'encuesta para promediar el desempeño del profesor',
                 'profesor_materia_id' => 1
             ],
             [
-                'titulo' => 'encuesta para medir el desempeño del profesor',
                 'profesor_materia_id' => 2
             ],
             ]

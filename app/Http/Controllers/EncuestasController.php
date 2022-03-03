@@ -8,6 +8,8 @@ use App\Models\PreguntasEncuesta;
 use App\Models\Preguntas;
 use App\Models\RespuestasPreguntasEncuesta;
 use App\Models\RespuestasDisponibles;
+use App\Models\EncuestaEstudiante;
+use App\Models\Materias;
 use Illuminate\Support\Facades\Log;
 
 class EncuestasController extends Controller
@@ -31,32 +33,40 @@ class EncuestasController extends Controller
     }
 
     public function CreateEncuesta(Request $data) {
-        //creando la encuesta obtenemos el id de la encuesta creada
-        $encuesta_id = EncuestaProfesorMateria::create([
-            'titulo' => $data->title,
-            'profesor_materia_id' => $data->profesor_materia
-        ])->id;
-        //creando las preguntas
-        foreach ($data->newQuestions as $question){
-            Log::alert($question);
-            $pregunta_id = Preguntas::firstOrCreate([
-                'titulo' => $question['title']
+        //seleccionamos los profesores de las materias de la mencion seleccionada
+        $profesores_materias = Materias::where('mencion_id', '=', $data->mencion_id)
+            ->join('profesores_materias', 'materias.id', '=', 'profesores_materias.materia_id')
+            ->select('profesores_materias.id')
+            ->get();
+        foreach ($profesores_materias as $profesor) {
+            //creando la encuesta obtenemos el id de la encuesta creada
+            $encuesta_id = EncuestaProfesorMateria::create([
+                'profesor_materia_id' => $profesor->id
             ])->id;
-            $pregunta_encuesta_id = PreguntasEncuesta::create([
-                'pregunta_id' => $pregunta_id,
-                'encuesta_id' => $encuesta_id
-            ])->id;
-            foreach ($question['options'] as $respuesta) {
-                $resp_id = RespuestasDisponibles::firstOrCreate([
-                    'respuesta' => $respuesta['nombre'],
-                    'valor' => $respuesta['valor']
+            //asignando la encuesta a todos los estudiantes del profesor actual
+            
+            EncuestaEstudiante::create();
+            //creando las preguntas
+            foreach ($data->newQuestions as $question) {
+                $pregunta_id = Preguntas::firstOrCreate([
+                    'titulo' => $question['title']
                 ])->id;
-                RespuestasPreguntasEncuesta::firstOrCreate([
-                    'pregunta_id' => $pregunta_encuesta_id,
-                    'resp_disp_id' => $resp_id
-                ]);
+                $pregunta_encuesta_id = PreguntasEncuesta::create([
+                    'pregunta_id' => $pregunta_id,
+                    'encuesta_id' => $encuesta_id
+                ])->id;
+                foreach ($question['options'] as $respuesta) {
+                    $resp_id = RespuestasDisponibles::firstOrCreate([
+                        'respuesta' => $respuesta['nombre'],
+                        'valor' => $respuesta['valor']
+                    ])->id;
+                    RespuestasPreguntasEncuesta::firstOrCreate([
+                        'pregunta_id' => $pregunta_encuesta_id,
+                        'resp_disp_id' => $resp_id
+                    ]);
+                }
+                
             }
-              
         }
         return response('Encuesta Guardada con Exito!', 200);
     }

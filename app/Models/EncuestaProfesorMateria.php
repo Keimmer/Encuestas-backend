@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class EncuestaProfesorMateria extends Model
 {
     protected $fillable = [
-        'titulo',
         'profesor_materia_id'
     ];
 

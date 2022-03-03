@@ -19,11 +19,14 @@ class Mencion extends Migration
             $table->string('nombre_mencion');
         });
 
-        DB::table('menciones')->insert(
-            array(
-                'nombre_mencion' => 'Derecho',
-            )
-        );
+        DB::table('menciones')->insert([
+            [
+                'nombre_mencion' => 'Derecho'
+            ],
+            [
+                'nombre_mencion' => 'TSU en Ciencias Penales y Criminalística'
+            ],
+            ]);
     }
 
     /**

@@ -32,6 +32,26 @@ class Profesores extends Migration
                 'apellidos' => 'Soto Yáñes',
                 'cod_profesor_eddo' => '374'
             ],
+            [
+                'nombres' => 'Beatriz Amaralis',
+                'apellidos' => 'Bautista Sánchez',
+                'cod_profesor_eddo' => '375'
+            ],
+            [
+                'nombres' => 'Leoncio Edilberto',
+                'apellidos' => 'Cuenca Espinoza',
+                'cod_profesor_eddo' => '376'
+            ],
+            [
+                'nombres' => 'Laura Cecilia',
+                'apellidos' => 'Omaña Ecarri',
+                'cod_profesor_eddo' => '377'
+            ],
+            [
+                'nombres' => 'Jesús Manuel',
+                'apellidos' => 'Oliveros Márquez',
+                'cod_profesor_eddo' => '378'
+            ],
             ]
         );
     }

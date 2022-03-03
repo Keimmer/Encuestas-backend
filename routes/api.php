@@ -27,7 +27,11 @@ Route::get('/estudiantes/{cedula}/encuestas', [EstudiantesController::class, 'Ge
 Route::get('/estudiante/{cedula}', [EstudiantesController::class, 'getEstudianteMateriasYProfesores']);
 //encuestas
 Route::get('/encuesta/{id}', [EncuestasController::class, 'GetPreguntasRespuestasEncuesta']);
+//mencion/materia
+Route::get('/menciones', [MateriasProfesores::class, 'GetMenciones']);
 //materias y profesores
-Route::get('/materias', [MateriasProfesores::class, 'GetMaterias']);
+
+Route::get('/mencion/{mencion}/años', [MateriasProfesores::class, 'GetMencionYears']);
+Route::get('/mencion/{id}/año/{year}/materias', [MateriasProfesores::class, 'GetMaterias']);
 
 Route::post('/encuesta/new', [EncuestasController::class, 'CreateEncuesta']);
