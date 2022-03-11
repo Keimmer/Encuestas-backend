@@ -35,3 +35,9 @@ Route::get('/mencion/{mencion}/años', [MateriasProfesores::class, 'GetMencionYe
 Route::get('/mencion/{id}/año/{year}/materias', [MateriasProfesores::class, 'GetMaterias']);
 
 Route::post('/encuesta/new', [EncuestasController::class, 'CreateEncuesta']);
+
+//responder encuestas
+Route::get('/encuesta/{id}', [EncuestasController::class, 'GetEncuestaYPreguntas']);
+
+//guardar respuestas encuesta
+Route::post('/encuesta/guardar-respuestas', [EncuestasController::class, 'GuardarRespuestasEstudiante']);

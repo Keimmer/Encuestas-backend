@@ -11,7 +11,8 @@ class EncuestaEstudiante extends Model
 
     protected $fillable = [
         'estudiante_id',
-        'encuesta_id'
+        'encuesta_id',
+        'respondida'
     ];
 
     public $timestamps = false;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estudiantes;
 use App\Models\EncuestaEstudiante;
 use App\Models\EstudiantesMaterias;
+use App\Models\EncuestaProfesorMateria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -28,16 +29,15 @@ class EstudiantesController extends Controller
             where('encuesta_estudiante.estudiante_id', '=', $estudiante[0]->id)
             ->join('encuesta_profesor_materias', 'encuesta_estudiante.encuesta_id', '=', 'encuesta_profesor_materias.id')
             ->get();
-
-        $estudiante['materias'] = EstudiantesMaterias::
-            where('estudiantes_materias.estudiante_id', '=', $estudiante[0]->id)
-            ->join('materias', 'estudiantes_materias.materia_id', '=', 'estudiantes_materias.materia_id')
-            ->join('profesores_materias', 'profesores_materias.materia_id', '=', 'materias.id')
-            ->join('profesores', 'profesores_materias.profesor_id', '=', 'profesores.id')
-            ->groupBy('materias.id')
-            ->get();
-        
-
+        foreach($estudiante['encuestas'] as $encuesta) {
+            $encuesta['profesor'] = EncuestaProfesorMateria::
+                where('encuesta_profesor_materias.id', '=', $encuesta->id)
+                ->join('profesores_materias', 'encuesta_profesor_materias.profesor_materia_id', '=', 'profesores_materias.id')
+                ->join('materias', 'profesores_materias.materia_id', '=', 'materias.id')
+                ->join('profesores', 'profesores_materias.profesor_id', '=', 'profesores.id')
+                ->select('nombres', 'apellidos', 'nombre_materia')
+                ->get();
+        }
         return $estudiante;
     }
     
